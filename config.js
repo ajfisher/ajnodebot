@@ -28,9 +28,12 @@ config.pinout = {
         }
     },
 
-	usrf_centre: {
-		pin: 7
-	},
+    usrf: {
+        centre: {
+		    pin: 7,
+            min_range: 15,
+	    },
+    },
 
 };
 
