@@ -1,7 +1,6 @@
 var socket; // used for everything.
 
-var change = 48;
-var MAXSPEED = 30; // set as constant
+var MAXSPEED = 100; // set as constant
 var REVERSE_ANGLE = 65; // breakpoint for when you are reversing
 var REVERSE_ANGLE_MAX = 90; // limit
 var REVERSE_RANGE = REVERSE_ANGLE_MAX - REVERSE_ANGLE; // gives an operating range
@@ -154,10 +153,10 @@ $(document).ready(function() {
         console.log("Connected");
         $("#connection").removeClass();
         if (data.state == "ONLINE") {
-            $("#connection").addClass("connected");
+            $("#connection").addClass("connected messagearea");
             $("#connection").text("Robot online...");
         } else {
-            $("#connection").addClass("nomotors");
+            $("#connection").addClass("nomotors messagearea");
             $("#connection").text("Control online but no motors");
         }
     });
@@ -167,11 +166,20 @@ $(document).ready(function() {
         $("#rangedist").text(data.cm + "cm");
     });
 
+    socket.on("rangealert", function(data) {
+        // deal with distance alerts
+        if (data.alert) {
+            $("#rangealert").show();
+        } else {
+            $("#rangealert").fadeOut(2000);
+        }
+    });
+
     socket.on("disconnect", function() {
         // disconnected
         console.log("Disconnected");
         $("#connection").removeClass();
-        $("#connection").addClass("disconnected");
+        $("#connection").addClass("disconnected messagearea");
         $("#connection").text("Robot disconnected");
     });
 });

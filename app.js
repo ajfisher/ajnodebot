@@ -2,6 +2,9 @@ var config = require("./config.js"),
     FourWDBot = require("./lib/4wdbot"),
     five = require("johnny-five")
 
+var colors = require("colors");
+    colors.setTheme(config.colours);
+
 // web server elements
 var express = require('express');
 var app = express();
@@ -27,7 +30,7 @@ server.listen(app.get('port'));
 var io = require('socket.io').listen(server);
 io.set('log level', 1);
 
-console.log("MESSAGE: Web server now listening");
+console.log("MESSAGE: Web server now listening".web);
 
 app.get('/', function(request, response) {
     response.sendfile(__dirname + '/public/index.html');
@@ -37,7 +40,7 @@ app.get('/', function(request, response) {
 
 io.sockets.on("connection", function(socket) {
 
-    console.log("New connection");
+    console.log("New connection".io_connection);
     if (board.ready) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
     } else {
@@ -47,7 +50,7 @@ io.sockets.on("connection", function(socket) {
     socket.on("control", function(data) {
         // control messages are simply a direction FBLR and a speed
         //
-        console.log(data);
+        //console.log(data);
 
         var vel = data.vel;
         var turn = data.turn;
@@ -70,16 +73,27 @@ io.sockets.on("connection", function(socket) {
     });
 
     socket.on("faststop", function() {
-        console.log("SOCKET:: CLOSE EMERGENCY");
+        console.log("SOCKET:: CLOSE EMERGENCY".warn);
         process.exit();
     });
 
     socket.on("disconnect", function() {
-        console.log("SOCKET:: User has been disconnected");
+        console.log("SOCKET:: User has been disconnected".io_connection);
     });
 
+    // robot events to send to socket.
     robot.on("distchange", function(err, centimetres) {
+        // send the current ping distance
         socket.emit("distance", {cm: centimetres});
+    });
+    robot.on("rangealert", function(err, cm) {
+        // got too close to something
+        robot.emergencyStop();
+        socket.emit("rangealert", {alert: true});
+    });
+    robot.on("rangeokay", function(err, cm) {
+        // recovered from closeness
+        socket.emit("rangealert", {alert: false});
     });
 });
 // 
@@ -87,7 +101,7 @@ io.sockets.on("connection", function(socket) {
 // Set up the robot control
 //
 
-console.info("Setting up robot. Attempting J5 connect to Arduino")
+console.info("Robot:".bot_note + "Attempting J5 --> Arduino".bot)
 
 board = new five.Board(config.device);
 
@@ -98,13 +112,11 @@ board.on("ready", function(err) {
         return;
     }
 
-    console.info("Board connected. Robot set up");
+    console.info("Robot: ".bot_note + "Board connected. Init control & sensors".bot);
 
     robot = new FourWDBot(config.pinout, board);
-
-    console.info("Robot running");
-
-
+    console.info("Robot: ".bot_note + "Running".bot_good );
+    console.log("Control the robot via your browser".data);
 });
 
 

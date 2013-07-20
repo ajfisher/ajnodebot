@@ -14,21 +14,21 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <div id="message">Please turn your screen to landscape view</div>
-        <div id="connection" class="waiting">Awaiting connection</div>
+        <div id="message" class="messagearea">Please turn your screen to landscape view</div>
+        <div id="connection" class="messagearea waiting">Awaiting connection</div>
+        <div id="rangealert" class="messagearea emergency">Alert - too close to an object</div>
 
         <div id="controls">
             <p><a href="#" id="stop">STOP</a></p>
             <p><a href="#" id="emergency">Emeregency Stop</a></p>
             <p><a href="#" id="startgyro">Start Gyro Control</a></p>
-            <p><a href="#" id="fwd">Fwd</a></p>
         </div>
         <div id="data">
+            <p>Current range (fwd): <span id="rangedist"><span></p>
             <p>Gamma: <span id="gamma"></span></p>
             <p>Beta: <span id="beta"></span></p>
             <p>Velocity: <span id="vel"></span></p>
             <p>Turn speed: <span id="turn"></span></p>
-            <p>Current range to obstacle: <span id="rangedist"><span></p>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>

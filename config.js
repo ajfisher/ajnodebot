@@ -37,6 +37,23 @@ config.pinout = {
 
 };
 
+config.colours = {
+    verbose: 'cyan',
+    info: 'green',
+    data: 'grey',
+    help: 'cyan',
+    warn: 'yellow',
+    debug: 'blue',
+    error: 'red',
+    io_info: 'grey',
+    io_help: 'cyan',
+    io_connection: 'green',
+    web: 'grey',
+    bot: 'cyan',
+    bot_error: 'red',
+    bot_note: 'magenta',
+    bot_good: 'green',
+}
 
 // if host is ares we're in dev, if it's pallas we're on the robot. The main
 // implication being we have to reset the arduino hardware as we're using

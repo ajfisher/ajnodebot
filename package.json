@@ -8,7 +8,8 @@
         "socket.io": "0.9.x",
         "serialport": "1.1.x",
         "firmata": ">= 0.2.8",
-        "johnny-five": "git+https://github.com/ajfisher/johnny-five"
+        "johnny-five": "git+https://github.com/ajfisher/johnny-five",
+        "colors": "0.6.x"
     },
     "engines": {
         "node": " >= 0.10.4"
