@@ -25,7 +25,6 @@ board.on("ready", function(err) {
         robot: robot
     });
 
-    board.repl.start("ajbot:>");
 
 });
 
