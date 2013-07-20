@@ -28,6 +28,10 @@ config.pinout = {
         }
     },
 
+	usrf_centre: {
+		pin: 7
+	},
+
 };
 
 
@@ -37,6 +41,7 @@ config.pinout = {
 
 if (config.host == "pallas") {
     // on the robot
+	config.device = "/dev/ttyAMA0";
 } else {
     // in a dev environment
     config.device = "";
