@@ -17,7 +17,7 @@ var STEERING_RANGE = STEERING_ANGLE_MAX - STEERING_ANGLE_MIN; // operating range
 // orientation globals
 var orientation_running = false; // check if things are running or not
 var current_orientation; // holds the orientation event stuff.
-var sample_rate = 1000 / 3; // number of times to sample sensor a second
+var sample_rate = 1000 / 10; // number of times to sample sensor a second
 var orientation_interval = null;
 
 function drive(velocity, turnamt) {
@@ -148,7 +148,7 @@ $(document).ready(function() {
     // set up the web sockets stuff.
     console.log("Setting up websockets");
    
-    socket = io.connect(location.host);
+    socket = io.connect(location.hostname);
     socket.on('connect_ack', function(data) {
         // we are connected
         console.log("Connected");
@@ -160,6 +160,11 @@ $(document).ready(function() {
             $("#connection").addClass("nomotors");
             $("#connection").text("Control online but no motors");
         }
+    });
+
+    socket.on("distance", function(data) {
+        // get the distance values
+        $("#rangedist").text(data.cm + "cm");
     });
 
     socket.on("disconnect", function() {
