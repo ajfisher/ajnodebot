@@ -36,9 +36,9 @@ board.on("ready", function(err) {
         robot: robot
     });
 
-/**    robot.on("distchange", function(err, cm){
+    robot.on("distchange", function(err, cm){
         console.log("Distance: " + cm + "cm");
-    });**/
+    });
 
     robot.on("rangealert", function(err, cm) {
         robot.emergencyStop();
@@ -47,7 +47,7 @@ board.on("ready", function(err) {
 
 });
 
-stdin.on('keypress2', function(chunk, key) {
+stdin.on('keypress', function(chunk, key) {
 	// process the keypresses
 
 	if (key && key.ctrl && key.name == 'c') {
