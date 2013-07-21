@@ -68,7 +68,7 @@ if (config.host == "pallas") {
     config.camera_id = 1;
 }
 
-config.camera_framerate = 1000 / 3; // # put in fps as the val and then it will calc msec
+config.camera_framerate = 1000 / 1; // # put in fps as the val and then it will calc msec
 
 module.exports = config;
 
