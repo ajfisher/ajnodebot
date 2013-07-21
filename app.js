@@ -103,7 +103,9 @@ io.sockets.on("connection", function(socket) {
 
 console.info("Robot:".bot_note + "Attempting J5 --> Arduino".bot)
 
-board = new five.Board(config.device);
+console.log(config.device);
+
+board = new five.Board({port: config.device});
 
 board.on("ready", function(err) {
 
