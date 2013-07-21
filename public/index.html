@@ -18,6 +18,11 @@
         <div id="connection" class="messagearea waiting">Awaiting connection</div>
         <div id="rangealert" class="messagearea emergency">Alert - too close to an object</div>
 
+
+        <div id="view">
+            <img id="webcam" src="/video"/>
+        </div>
+
         <div id="controls">
             <p><a href="#" id="stop">STOP</a></p>
             <p><a href="#" id="emergency">Emeregency Stop</a></p>
@@ -30,6 +35,7 @@
             <p>Velocity: <span id="vel"></span></p>
             <p>Turn speed: <span id="turn"></span></p>
         </div>
+        <div class="clearfix"></div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
         <script src="/socket.io/socket.io.js"></script>            

@@ -1,4 +1,5 @@
 var config = require("./config.js"),
+    camera = require("./lib/camera"),
     FourWDBot = require("./lib/4wdbot"),
     five = require("johnny-five")
 
@@ -36,22 +37,29 @@ app.get('/', function(request, response) {
     response.sendfile(__dirname + '/public/index.html');
 });
 
-// now we define all the socket routing
+//
+//
+// Camera Set up.
+//
+camera.init(app, config);
+
+//
+//
+// WebSocket routing
+//
 
 io.sockets.on("connection", function(socket) {
 
     console.log("New connection".io_connection);
     if (board.ready) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
+        camera.start();
     } else {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "NOMOTORS"});
     }
 
     socket.on("control", function(data) {
-        // control messages are simply a direction FBLR and a speed
-        //
-        //console.log(data);
-
+        // control messages are just a velocity and a turning speed.
         var vel = data.vel;
         var turn = data.turn;
 
@@ -79,6 +87,7 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("disconnect", function() {
         console.log("SOCKET:: User has been disconnected".io_connection);
+        camera.pause();
     });
 
     // robot events to send to socket.

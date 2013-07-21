@@ -1,6 +1,5 @@
 var os = require("os");
 
-
 var config = {};
 
 config.host = os.hostname();
@@ -62,12 +61,14 @@ config.colours = {
 if (config.host == "pallas") {
     // on the robot
 	config.device = "/dev/ttyAMA0";
+    config.camera_id = 0;
 } else {
     // in a dev environment
     config.device = "";
+    config.camera_id = 1;
 }
 
-
+config.camera_framerate = 1000 / 3; // # put in fps as the val and then it will calc msec
 
 module.exports = config;
 
