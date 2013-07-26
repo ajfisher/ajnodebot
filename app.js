@@ -1,5 +1,4 @@
 var config = require("./config.js"),
-    camera = require("./lib/camera"),
     FourWDBot = require("./lib/4wdbot"),
     five = require("johnny-five")
 
@@ -41,7 +40,7 @@ app.get('/', function(request, response) {
 //
 // Camera Set up.
 //
-camera.init(app, config);
+//camera.init(app, config);
 
 //
 //
@@ -53,7 +52,7 @@ io.sockets.on("connection", function(socket) {
     console.log("New connection".io_connection);
     if (board.ready) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
-        camera.start();
+        //camera.start();
     } else {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "NOMOTORS"});
     }
@@ -87,7 +86,7 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("disconnect", function() {
         console.log("SOCKET:: User has been disconnected".io_connection);
-        camera.pause();
+        //camera.pause();
     });
 
     // robot events to send to socket.

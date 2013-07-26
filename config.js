@@ -7,7 +7,7 @@ config.host = os.hostname();
 config.pinout = {
     right_motor: {
         pins: {
-            motor: 3,
+            pwm: 3,
             dir: 12,
         },
         thresholds: {
@@ -18,7 +18,7 @@ config.pinout = {
 
     left_motor: {
         pins: {
-            motor: 11,
+            pwm: 11,
             dir: 13,
         },
         thresholds: {
