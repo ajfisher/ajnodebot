@@ -19,6 +19,9 @@ var current_orientation; // holds the orientation event stuff.
 var sample_rate = 1000 / 10; // number of times to sample sensor a second
 var orientation_interval = null;
 
+// speed settings for keyboard control
+var cur_speed_setting = 0.5;
+
 function drive(velocity, turnamt) {
     socket.emit('control', {vel: Math.round(velocity), turn: Math.round(turnamt)});
 }
@@ -133,16 +136,69 @@ var orientation_tracker = function() {
     drive(vel, turn);
 }
 
+function process_key (e) {
+	// process the keypresses
+	speed = cur_speed_setting * MAXSPEED;
+
+	// not quite correct - but works for purpose
+	switch (String.fromCharCode(e.charCode)) {
+		case "w":
+			drive(speed, 0);
+			break;
+		case "s":
+			drive(-speed, 0);
+			break;
+		case "a":
+			drive(0, -speed);
+			break;
+		case "d":
+			drive(0, speed);
+			break;
+		case " ":
+			drive(0,0);
+			break;
+		case "1":
+			cur_speed_setting = 0.1;
+			break;
+		case "2":
+			cur_speed_setting = 0.2;
+			break;
+		case "3":
+			cur_speed_setting = 0.3;
+			break;
+		case "4":
+			cur_speed_setting = 0.4;
+			break;
+		case "5":
+			cur_speed_setting = 0.5;
+			break;
+		case "6":
+			cur_speed_setting = 0.6;
+			break;
+		case "7":
+			cur_speed_setting = 0.7;
+			break;
+		case "8":
+			cur_speed_setting = 0.8;
+			break;
+		case "9":
+			cur_speed_setting = 0.9;
+			break;
+	}
+}
+
 
 $(document).ready(function() {
     console.log("Initialising motion stuff");
     mo.init();
 
-    // do the even binding
+    // do the event binding
     $("#stop").bind("click", function() { drive(0, 0)});
 
     $("#startgyro").bind("click", start);
     $("#emergency").bind("click", emergencystop);
+
+	window.addEventListener("keypress", process_key);
 
     // set up the web sockets stuff.
     console.log("Setting up websockets");
