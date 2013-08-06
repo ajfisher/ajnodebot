@@ -98,5 +98,9 @@ div.clearfix {
     }
 }
 
-
+@media all and (min-width: 1200px) {
+	div#data {
+		padding-left: 4em;
+	}
+}
 

@@ -11,7 +11,8 @@
         "express": "3.2.x",
         "socket.io": "0.9.x",
         "johnny-five": "0.7.x",
-        "colors": "0.6.x"
+        "colors": "0.6.x",
+		"opencv": "0.3.x"
     },
     "engines": {
         "node": " >= 0.10.4"

@@ -1,6 +1,7 @@
 var config = require("./config.js"),
     FourWDBot = require("./lib/4wdbot"),
-    five = require("johnny-five")
+    five = require("johnny-five"),
+	camera = require("./lib/camera")
 
 var colors = require("colors");
     colors.setTheme(config.colours);
@@ -40,7 +41,7 @@ app.get('/', function(request, response) {
 //
 // Camera Set up.
 //
-//camera.init(app, config);
+camera.init(app, config);
 
 //
 //
@@ -52,7 +53,7 @@ io.sockets.on("connection", function(socket) {
     console.log("New connection".io_connection);
     if (board.ready) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
-        //camera.start();
+        camera.start();
     } else {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "NOMOTORS"});
     }
@@ -86,7 +87,7 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("disconnect", function() {
         console.log("SOCKET:: User has been disconnected".io_connection);
-        //camera.pause();
+        camera.pause();
     });
 
     // robot events to send to socket.
@@ -110,8 +111,6 @@ io.sockets.on("connection", function(socket) {
 //
 
 console.info("Robot:".bot_note + "Attempting J5 --> Arduino".bot)
-
-console.log(config.device);
 
 board = new five.Board({port: config.device});
 
