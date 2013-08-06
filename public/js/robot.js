@@ -1,6 +1,6 @@
 var socket; // used for everything.
 
-var MAXSPEED = 150; // set as constant
+var MAXSPEED = 200; // set as constant
 var REVERSE_ANGLE = 65; // breakpoint for when you are reversing
 var REVERSE_ANGLE_MAX = 90; // limit
 var REVERSE_RANGE = REVERSE_ANGLE_MAX - REVERSE_ANGLE; // gives an operating range

@@ -61,6 +61,7 @@ config.colours = {
 if (config.host == "pallas") {
     // on the robot
 	config.device = "/dev/ttyAMA0";
+    //config.device = "";
     config.camera_id = 0;
 } else {
     // in a dev environment
