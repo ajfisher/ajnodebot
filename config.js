@@ -2,6 +2,39 @@ var os = require("os");
 
 var config = {};
 
+config.switches = {
+	camera: 	true,
+	pings: 		true,
+	motors:		true,
+	useusb:		false
+};
+
+// process the arguments and expose them out
+process.argv.forEach(function(val, index, array) {
+	switch(val) {
+		case "--nocam":
+			// sets no camera
+			console.log("NO CAMERA");
+			config.switches.camera = false;
+			break;
+		case "--noping":
+			// removed the ping sensors TODO
+			console.log("NO USRFs");
+			config.switches.pings = false;
+			break;
+		case "--nomotor":
+			// turns off the motors TODO
+			console.log("NO MOTORS");
+			config.switches.motors = false;
+			break;
+		case "--useusb":
+			// uses a USB connector not UART
+			console.log("Using Serial over USB");
+			config.switches.useusb = true;
+			break;
+	};
+});
+
 config.host = os.hostname();
 
 config.pinout = {
@@ -26,6 +59,14 @@ config.pinout = {
             min: 30,
         }
     },
+
+	pan_servo: {
+		pin: 8
+	},
+
+	tilt_servo: {
+		pin: 9
+	},
 
     usrf: {
         centre: {
@@ -60,8 +101,11 @@ config.colours = {
 
 if (config.host == "pallas") {
     // on the robot
-	config.device = "/dev/ttyAMA0";
-    //config.device = "";
+	if (! config.switches.useusb) {
+		config.device = "/dev/ttyAMA0";
+	} else {
+		config.device = "";
+	}
     config.camera_id = 0;
 } else {
     // in a dev environment

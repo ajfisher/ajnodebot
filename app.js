@@ -1,7 +1,13 @@
 var config = require("./config.js"),
     FourWDBot = require("./lib/4wdbot"),
-    five = require("johnny-five"),
-	camera = require("./lib/camera")
+    five = require("johnny-five")
+
+var camera;
+
+if (config.switches.camera) {
+	camera = require("./lib/camera");
+}
+
 
 var colors = require("colors");
     colors.setTheme(config.colours);
@@ -41,8 +47,9 @@ app.get('/', function(request, response) {
 //
 // Camera Set up.
 //
-camera.init(app, config);
-
+if (config.switches.camera){
+	camera.init(app, config);
+}
 //
 //
 // WebSocket routing
@@ -53,7 +60,9 @@ io.sockets.on("connection", function(socket) {
     console.log("New connection".io_connection);
     if (board.ready) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
-        camera.start();
+		if (config.switches.camera) {
+	        camera.start();
+		}
     } else {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "NOMOTORS"});
     }
@@ -87,7 +96,9 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("disconnect", function() {
         console.log("SOCKET:: User has been disconnected".io_connection);
-        camera.pause();
+		if (config.switches.camera) {
+	        camera.pause();
+		}
     });
 
     // robot events to send to socket.
@@ -126,6 +137,9 @@ board.on("ready", function(err) {
     robot = new FourWDBot(config.pinout, board);
     console.info("Robot: ".bot_note + "Running".bot_good );
     console.log("Control the robot via your browser".data);
+    board.repl.inject({
+        robot: robot
+    });
 });
 
 
