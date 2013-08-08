@@ -74,8 +74,8 @@ var orientation_tracker = function() {
     var turn = 0;
     var turn_dir = 0;
 
-    $("#gamma").text(gamma);
-    $("#beta").text(beta);
+    //$("#gamma").text(gamma);
+    //$("#beta").text(beta);
     // so we assume that when the device is on its side that gamma is for 
     // acceleration and beta is for steering
 
@@ -105,7 +105,7 @@ var orientation_tracker = function() {
     }
 
     vel = vel * vel_dir;
-    $("#vel").text(vel);
+    //$("#vel").text(vel);
 
     // now we do the steering. This can invert depending on the gamma. 
     // So if gamma is positive then steering to the right (clockwise) will
@@ -137,7 +137,7 @@ var orientation_tracker = function() {
         turn = (beta_abs - STEERING_ANGLE_MIN) / STEERING_RANGE * MAXSPEED;
     }
     turn = turn * turn_dir;
-    $("#turn").text(turn);
+    //$("#turn").text(turn);
 
     // send the message with the speed and turn.
     drive(vel, turn);
@@ -196,6 +196,9 @@ function process_key (e) {
 			break;
 		case ".":
 			pan(1);
+			break;
+		case "/":
+			pan(0);
 			break;
 		case "p":
 			tilt(-1);

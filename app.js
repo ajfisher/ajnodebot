@@ -106,6 +106,10 @@ io.sockets.on("connection", function(socket) {
 						// go right
 						robot.panRight(10);
 					}
+					if (data.dir == 0) {
+						// center the servo
+						robot.panCentre();
+					}
 				} else {
 					if (data.dir < 0) {
 						// go up

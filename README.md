@@ -15,4 +15,8 @@ To run the command line version:
 
     node app-cli.js
 
+# Mods required
 
+Make sure you use advanced firmata on the arduino so you get pulseIn as an option.
+
+Also make a mod to the ping library at line 47 to set maxListeners much higher.
