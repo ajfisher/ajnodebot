@@ -23,7 +23,14 @@ var orientation_interval = null;
 var cur_speed_setting = 0.5;
 
 function drive(velocity, turnamt) {
-    socket.emit('control', {vel: Math.round(velocity), turn: Math.round(turnamt)});
+    socket.emit('control', {type: 'drive', vel: Math.round(velocity), turn: Math.round(turnamt)});
+}
+function pan(direction) {
+	socket.emit('control', {type:'servo', servo: 'pan', dir: direction});
+}
+
+function tilt(direction) {
+	socket.emit('control', {type:'servo', servo: 'tilt', dir: direction});
 }
 
 function emergencystop() {
@@ -183,6 +190,18 @@ function process_key (e) {
 			break;
 		case "9":
 			cur_speed_setting = 0.9;
+			break;
+		case ",":
+			pan(-1);
+			break;
+		case ".":
+			pan(1);
+			break;
+		case "p":
+			tilt(-1);
+			break;
+		case "l":
+			tilt(1);
 			break;
 	}
 }

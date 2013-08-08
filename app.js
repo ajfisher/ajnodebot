@@ -69,24 +69,55 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("control", function(data) {
         // control messages are just a velocity and a turning speed.
-        var vel = data.vel;
-        var turn = data.turn;
+		var type = data.type;
 
-        if (Math.abs(turn) > Math.abs(vel)) {
-            // we want to turn
-            if (turn < 0) {
-                robot.pivotLeft(Math.abs(turn));
-            } else {
-                robot.pivotRight(Math.abs(turn));
-            }
-        } else {
-            // got forward and back
-            if (vel > 0) {
-                robot.forward(Math.abs(vel));
-            } else {
-                robot.reverse(Math.abs(vel));
-            }
-        }
+		switch (type) {
+			case "drive":
+				// motor drive control
+				var vel = data.vel;
+				var turn = data.turn;
+
+				if (Math.abs(turn) > Math.abs(vel)) {
+					// we want to turn
+					if (turn < 0) {
+						robot.pivotLeft(Math.abs(turn));
+					} else {
+						robot.pivotRight(Math.abs(turn));
+					}
+				} else {
+					// got forward and back
+					if (vel > 0) {
+						robot.forward(Math.abs(vel));
+					} else {
+						robot.reverse(Math.abs(vel));
+					}
+				}
+				break;
+			case "servo":
+				// servo control.
+				var dir = data.dir;
+				var servo = null;
+				if (data.servo == "pan") {
+					if (data.dir < 0) {
+						// go left
+						robot.panLeft(10);
+					}
+					if (data.dir > 0){
+						// go right
+						robot.panRight(10);
+					}
+				} else {
+					if (data.dir < 0) {
+						// go up
+						robot.tiltUp(10);
+					}
+					if (data.dir > 0){
+						// go down
+						robot.tiltDown(10);
+					}
+				}
+				break;
+		}
     });
 
     socket.on("faststop", function() {

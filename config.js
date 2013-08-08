@@ -61,11 +61,16 @@ config.pinout = {
     },
 
 	pan_servo: {
-		pin: 8
+		pin: 8,
+		min: 30,
+		max: 150
+
 	},
 
 	tilt_servo: {
-		pin: 9
+		pin: 9,
+		min: 70,
+		max: 180
 	},
 
     usrf: {
