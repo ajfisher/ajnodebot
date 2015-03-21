@@ -63,20 +63,21 @@ config.pinout = {
 	pan_servo: {
 		pin: 8,
 		min: 30,
-		max: 150
-
+		max: 150,
+		centre: 90,
 	},
 
 	tilt_servo: {
 		pin: 9,
-		min: 70,
-		max: 180
+		min: 90,
+		max: 140,
+		centre: 115,
 	},
 
     usrf: {
         centre: {
 		    pin: 7,
-            min_range: 15,
+            min_range: 25,
 	    },
     },
 
@@ -104,7 +105,7 @@ config.colours = {
 // implication being we have to reset the arduino hardware as we're using
 // UART serial rather than USB serial.
 
-if (config.host == "pallas") {
+if (config.host == "pallas.local") {
     // on the robot
 	if (! config.switches.useusb) {
 		config.device = "/dev/ttyAMA0";
@@ -118,7 +119,7 @@ if (config.host == "pallas") {
     config.camera_id = 1;
 }
 
-config.camera_framerate = 1000 / 1; // # put in fps as the val and then it will calc msec
+config.camera_framerate = 1000 / 25; // # put in fps as the val and then it will calc msec
 
 module.exports = config;
 

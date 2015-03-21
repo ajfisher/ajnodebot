@@ -97,14 +97,15 @@ io.sockets.on("connection", function(socket) {
 				// servo control.
 				var dir = data.dir;
 				var servo = null;
+				var amt = 5;
 				if (data.servo == "pan") {
 					if (data.dir < 0) {
 						// go left
-						robot.panLeft(10);
+						robot.panLeft(amt);
 					}
 					if (data.dir > 0){
 						// go right
-						robot.panRight(10);
+						robot.panRight(amt);
 					}
 					if (data.dir == 0) {
 						// center the servo
@@ -113,11 +114,11 @@ io.sockets.on("connection", function(socket) {
 				} else {
 					if (data.dir < 0) {
 						// go up
-						robot.tiltUp(10);
+						robot.tiltUp(amt);
 					}
 					if (data.dir > 0){
 						// go down
-						robot.tiltDown(10);
+						robot.tiltDown(amt);
 					}
 				}
 				break;
