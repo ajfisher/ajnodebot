@@ -9,9 +9,6 @@ if (config.switches.camera) {
 }
 
 
-var colors = require("colors");
-    colors.setTheme(config.colours);
-
 // web server elements
 var express = require('express');
 var app = express();
@@ -58,7 +55,7 @@ if (config.switches.camera){
 io.sockets.on("connection", function(socket) {
 
     console.log("New connection".io_connection);
-    if (board.ready) {
+    if (board.isReady) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
 		if (config.switches.camera) {
 	        camera.start();
@@ -159,7 +156,7 @@ io.sockets.on("connection", function(socket) {
 
 console.info("Robot:".bot_note + "Attempting J5 --> Arduino".bot)
 
-board = new five.Board({port: config.device});
+board = new five.Board({ port: "/dev/ttyS99" });
 
 board.on("ready", function(err) {
 
@@ -170,12 +167,9 @@ board.on("ready", function(err) {
 
     console.info("Robot: ".bot_note + "Board connected. Init control & sensors".bot);
 
-    robot = new FourWDBot(config.pinout, board);
+    robot = new FourWDBot(config.pinout, board, config.switches);
     console.info("Robot: ".bot_note + "Running".bot_good );
     console.log("Control the robot via your browser".data);
-    board.repl.inject({
-        robot: robot
-    });
 });
 
 
