@@ -8,7 +8,8 @@ var ping;
 
 var speed = 0;
 var max_speed = 150;
-var cur_speed_setting = 0.6
+var cur_speed_setting = 0.2
+
 
 // set up the input
 var stdin = process.openStdin();
@@ -27,14 +28,10 @@ board.on("ready", function(err) {
 
     console.info("Board connected. Robot set up");
 
-    robot = new FourWDBot(config.pinout, board);
+    robot = new FourWDBot(config.pinout, board, config.switches);
 
-    console.info("Robot running issue commands to it.");
-	console.info("LRUP arrows. Space stop. H help");
-
-    board.repl.inject({
-        robot: robot
-    });
+	console.info("Robot running issue commands to it.");
+	console.info("LRUD arrows. Space stop. H help");
 
     robot.on("distchange", function(err, cm){
         console.log("Distance: " + cm + "cm");
@@ -57,8 +54,11 @@ stdin.on('keypress', function(chunk, key) {
 
 	speed = cur_speed_setting * max_speed;
 
-	if (key) {	
+	if (key) {
 		switch (key.name) {
+			case "h":
+				robot.help();
+				break;
 			case "up":
 				robot.forward(speed);
 				break;
@@ -108,6 +108,5 @@ stdin.on('keypress', function(chunk, key) {
 				break;
 		}
 	}
-
 });
 

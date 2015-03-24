@@ -1,4 +1,5 @@
-var os = require("os");
+var 	os = require("os"),
+	    colors = require("colors");
 
 var config = {};
 
@@ -9,31 +10,6 @@ config.switches = {
 	useusb:		false
 };
 
-// process the arguments and expose them out
-process.argv.forEach(function(val, index, array) {
-	switch(val) {
-		case "--nocam":
-			// sets no camera
-			console.log("NO CAMERA");
-			config.switches.camera = false;
-			break;
-		case "--noping":
-			// removed the ping sensors TODO
-			console.log("NO USRFs");
-			config.switches.pings = false;
-			break;
-		case "--nomotor":
-			// turns off the motors TODO
-			console.log("NO MOTORS");
-			config.switches.motors = false;
-			break;
-		case "--useusb":
-			// uses a USB connector not UART
-			console.log("Using Serial over USB");
-			config.switches.useusb = true;
-			break;
-	};
-});
 
 config.host = os.hostname();
 
@@ -101,14 +77,16 @@ config.colours = {
     bot_good: 'green',
 }
 
+colors.setTheme(config.colours);
+
 // if host is ares we're in dev, if it's pallas we're on the robot. The main
 // implication being we have to reset the arduino hardware as we're using
 // UART serial rather than USB serial.
 
-if (config.host == "pallas.local") {
+if (config.host == "pallas") {
     // on the robot
 	if (! config.switches.useusb) {
-		config.device = "/dev/ttyAMA0";
+		config.device = "/dev/ttyS99";
 	} else {
 		config.device = "";
 	}
@@ -120,6 +98,32 @@ if (config.host == "pallas.local") {
 }
 
 config.camera_framerate = 1000 / 25; // # put in fps as the val and then it will calc msec
+
+// process the arguments and expose them out
+process.argv.forEach(function(val, index, array) {
+	switch(val) {
+		case "--nocam":
+			// sets no camera
+			console.log("NO CAMERA".bot);
+			config.switches.camera = false;
+			break;
+		case "--noping":
+			// removed the ping sensors TODO
+			console.log("NO USRFs".bot);
+			config.switches.pings = false;
+			break;
+		case "--nomotor":
+			// turns off the motors TODO
+			console.log("NO MOTORS".bot);
+			config.switches.motors = false;
+			break;
+		case "--useusb":
+			// uses a USB connector not UART
+			console.log("Using Serial over USB".bot);
+			config.switches.useusb = true;
+			break;
+	};
+});
 
 module.exports = config;
 
