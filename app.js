@@ -4,9 +4,9 @@ var config = require("./config.js"),
 
 var camera;
 
-if (config.switches.camera) {
-	camera = require("./lib/camera");
-}
+//if (config.switches.camera) {
+	//camera = require("./lib/camera");
+//}
 
 
 // web server elements
@@ -44,9 +44,9 @@ app.get('/', function(request, response) {
 //
 // Camera Set up.
 //
-if (config.switches.camera){
-	camera.init(app, config);
-}
+//if (config.switches.camera){
+//	camera.init(app, config);
+//}
 //
 //
 // WebSocket routing
@@ -57,9 +57,9 @@ io.sockets.on("connection", function(socket) {
     console.log("New connection".io_connection);
     if (board.isReady) {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "ONLINE"});
-		if (config.switches.camera) {
-	        camera.start();
-		}
+		//if (config.switches.camera) {
+	    //    camera.start();
+		//}
     } else {
         socket.emit("connect_ack", {msg: "Welcome Control", state: "NOMOTORS"});
     }
@@ -129,9 +129,9 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("disconnect", function() {
         console.log("SOCKET:: User has been disconnected".io_connection);
-		if (config.switches.camera) {
-	        camera.pause();
-		}
+		//if (config.switches.camera) {
+	    //    camera.pause();
+		//}
     });
 
     // robot events to send to socket.

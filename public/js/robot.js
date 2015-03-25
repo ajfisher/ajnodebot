@@ -56,6 +56,7 @@ function start() {
         window.addEventListener("deviceorientation", update_gyro);
         orientation_interval = setInterval(orientation_tracker, sample_rate);
     }
+
 }
 
 function update_gyro(e) {
@@ -214,6 +215,11 @@ $(document).ready(function() {
     console.log("Initialising motion stuff");
     mo.init();
 
+    var camera = document.querySelector("#webcam");
+    console.log("Current source: " + camera.src);
+    camera.src = camera.src.replace(":" + window.location.port + "/", "");
+    console.log("New src: " + camera.src);
+    
     // do the event binding
     $("#stop").bind("click", function() { drive(0, 0)});
 
